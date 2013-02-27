@@ -20,8 +20,8 @@ class Game
 
   def fire(options={})
     current_board = storage.get(options["id"])
-    game = Board.new(current_board)
     return [500, {:error => "no game in progress"}] unless current_board
+    game = Board.new(current_board)
     [200, {:id=>"users:doug:1", :x=>1, :y=>1, :status=>game.status}]
   end
 
