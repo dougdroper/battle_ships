@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "Sinatra App" do
-
   it "creates a new game" do
     RedisStorage.any_instance.stub(:incr => 1, :set => stub)
     data = Yajl::Encoder.encode({:name => "doug", :email => "dougdroper"})
@@ -11,7 +10,7 @@ describe "Sinatra App" do
   end
 
   it "receives a fire request" do
-    RedisStorage.any_instance.stub(:incr => 1, :get => stub(:status => "miss"), :set => stub)
+    RedisStorage.any_instance.stub(:incr => 1, :get => ([""] * 100), :set => Board.new)
     data = Yajl::Encoder.encode({:id => 'users:doug:1', :x => 1, :y => 1})
     post '/fire', :data => data
     last_response.should be_ok

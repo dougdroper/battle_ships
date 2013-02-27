@@ -15,13 +15,13 @@ describe Game do
   end
 
   it "receives a fire even with co-ordinates and returns a miss" do
-    Board.any_instance.stub(:status => "miss")
+    Board.any_instance.stub(:status => "miss", :board => ([""] * 100))
     game = Game.new(stub(:incr => 1, :get => stub))
     game.fire({"id" => "users:doug:1", "x" => 1, "y" => 1}).should == [200, {:id => "users:doug:1", :x => 1, :y => 1, :status => "miss"}]
   end
 
   it "receives a fire even with co-ordinates and returns a hit" do
-    Board.any_instance.stub(:status => "hit")
+    Board.any_instance.stub(:status => "hit", :board => ([""] * 100))
     game = Game.new(stub(:incr => 1, :get => stub))
     game.fire({"id" => "users:doug:1", "x" => 1, "y" => 1}).should == [200, {:id => "users:doug:1", :x => 1, :y => 1, :status => "hit"}]
   end

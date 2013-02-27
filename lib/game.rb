@@ -3,8 +3,8 @@ require 'redis_storage'
 class Game
   attr_reader :name, :email, :storage, :board
 
-  def initialize(storage=RedisStorage.new, board=Board.new)
-    @storage, @board = storage, board
+  def initialize(storage=RedisStorage.new)
+    @storage = storage
   end
 
   def id
@@ -21,7 +21,13 @@ class Game
   def fire(options={})
     current_board = storage.get(options["id"])
     return [500, {:error => "no game in progress"}] unless current_board
-    game = Board.new(current_board)
+    begin
+      game = Board.new(current_board)
+      game.fire(CoOrdinates.new(options))
+    rescue => e
+      puts e.backtrace
+      return [500, {:error => e.message}]
+    end
     [200, {:id=>"users:doug:1", :x=>1, :y=>1, :status=>game.status}]
   end
 
