@@ -2,6 +2,7 @@ require 'sinatra'
 require 'yajl'
 
 require_relative 'lib/game'
+require_relative 'lib/board'
 
 configure do
   mime_type :json, "application/json"
@@ -12,11 +13,27 @@ before do
 end
 
 post "/new" do
-  status, data = Game.new.new_game(Yajl::Parser.parse(params["data"]))
-  [status, Yajl::Encoder.encode(data)]
+  begin
+    status, data = Game.new.new_game(parse(params["data"]))
+    [status, [encode(data)]]
+  rescue
+    [500, [encode("Something went wrong")]]
+  end
 end
 
 post "/fire" do
-  game = Game.new(Yajl::Parser.parse(params["data"]))
-  Yajl::Encoder.encode(game.next_move)
+  begin
+    status, data = Game.new.fire(parse(params["data"]))
+    [status, [encode(data)]]
+  rescue
+    [500, [encode("Something went wrong")]]
+  end
+end
+
+def encode(data)
+  Yajl::Encoder.encode data
+end
+
+def parse(data)
+  Yajl::Parser.parse data
 end

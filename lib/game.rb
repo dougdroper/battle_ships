@@ -1,33 +1,38 @@
-require 'redis'
+require 'redis_storage'
 
 class Game
-  ENV["REDISTOGO_URL"] ||= "redis://127.0.0.1:6379"
+  attr_reader :name, :email, :storage, :board
 
-  attr_reader :name, :email, :redis
-  def initialize(redis=nil)
-    redis ||= Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
-    @redis = redis
+  def initialize(storage=RedisStorage.new, board=Board.new)
+    @storage, @board = storage, board
   end
 
   def id
-    @id ||= redis.incr "users:#{name.downcase}"
+    @id ||= storage.incr "users:#{name.downcase}"
   end
 
   def new_game(options={})
     @name, @email = options["name"], options["email"]
     return [500, {:error => "name/email is required"}] unless name && email
-    [200, {:id => "users:#{name.downcase}:#{id}", :x => 1, :y => 1}]
+    storage.set(game_name, Board.new.board)
+    [200, {:id => game_name, :x => 1, :y => 1}]
   end
 
-  def uri
-    @uri ||= URI.parse(ENV["REDISTOGO_URL"])
+  def fire(options={})
+    current_board = storage.get(options["id"])
+    game = Board.new(current_board)
+    return [500, {:error => "no game in progress"}] unless current_board
+    [200, {:id=>"users:doug:1", :x=>1, :y=>1, :status=>game.status}]
   end
 
   def next_move
     {"id" => id, "x" => 1, "y" => 2}
   end
 
-  def board
-    redis.get(email)
+  private
+
+  def game_name
+    @game_name ||= "users:#{name.downcase}:#{id}"
   end
+
 end
