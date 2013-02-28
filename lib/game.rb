@@ -23,7 +23,7 @@ class Game
     return [500, {:error => "no game in progress"}] unless current_board
     begin
       game = Board.new(current_board)
-      game.fire(CoOrdinates.new(options))
+      game.fire(Coordinates.new(options))
     rescue => e
       puts e.backtrace
       return [500, {:error => e.message}]

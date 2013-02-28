@@ -1,4 +1,4 @@
-require 'co_ordinates'
+require 'coordinates'
 
 class Board
   attr_reader :board
@@ -14,8 +14,8 @@ class Board
     [""] * 100
   end
 
-  def fire(co_ordinates)
-    board[co_ordinates.x + (co_ordinates.y * 10)] = "x"
+  def fire(coordinates)
+    board[coordinates.x + (coordinates.y * 10)] = "x"
   end
 end
 

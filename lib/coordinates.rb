@@ -1,4 +1,4 @@
-class CoOrdinates
+class Coordinates
   attr_reader :x, :y
   def initialize(options={})
     @x, @y = options["x"], options["y"]
@@ -8,11 +8,11 @@ class CoOrdinates
   private
 
   def validate
-    raise CoOrdinateMissingException.new if missing_co_ordinate?
+    raise CoordinateMissingException.new if missing_coordinates?
     raise OutOfBoundsException.new if out_of_bounds?
   end
 
-  def missing_co_ordinate?
+  def missing_coordinates?
     !!!(x && y)
   end
 
@@ -27,8 +27,8 @@ class OutOfBoundsException < Exception
   end
 end
 
-class CoOrdinateMissingException < Exception
+class CoordinateMissingException < Exception
   def error_message
-    "Missing co-ordinate"
+    "Missing coordinate"
   end
 end

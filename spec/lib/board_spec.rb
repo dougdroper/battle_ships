@@ -9,9 +9,9 @@ describe Board do
     Board.new([""]).board.should == [""]
   end
 
-  it "add a co-ordinate to the board" do
+  it "add a coordinate to the board" do
     board = Board.new
-    board.fire(CoOrdinates.new("x" => 1, "y" => 1))
+    board.fire(Coordinates.new("x" => 1, "y" => 1))
     board.board.take(12).should == [""] * 11 + ["x"]
   end
 end
