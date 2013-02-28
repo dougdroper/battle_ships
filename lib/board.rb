@@ -15,7 +15,13 @@ class Board
   end
 
   def fire(coordinates)
+    raise AlreadyTaken if board[coordinates.x + (coordinates.y * 10)] == "x"
     board[coordinates.x + (coordinates.y * 10)] = "x"
   end
 end
 
+class AlreadyTaken < Exception
+  def error_message
+    "Coordinate already taken"
+  end
+end
