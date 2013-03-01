@@ -3,6 +3,7 @@ require 'yajl'
 
 require_relative 'lib/game'
 require_relative 'lib/board'
+require_relative 'lib/fleet'
 
 configure do
   mime_type :json, "application/json"
