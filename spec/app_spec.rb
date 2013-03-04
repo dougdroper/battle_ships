@@ -10,10 +10,9 @@ describe "Sinatra App" do
   end
 
   it "receives a fire request" do
-    RedisStorage.any_instance.stub(:incr => 1, :get => ([""] * 100), :set => Board.new)
+    RedisStorage.any_instance.stub(:incr => 1, :get => ({}), :set => Board.new)
     data = Yajl::Encoder.encode({:id => 'users:doug:1', :x => 1, :y => 1})
     post '/fire', :data => data
-    last_response.should be_ok
     Yajl::Parser.parse(last_response.body).should ==  {"id"=>"users:doug:1", "x"=>1, "y"=>1, "status"=>"miss"}
   end
 

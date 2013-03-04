@@ -6,40 +6,20 @@ class Board
     @board = board || create_fleet
   end
 
-  def status
-    "miss"
-  end
-
   def fire(coordinates)
     raise AlreadyTaken if board[coordinates.x + (coordinates.y)] == "x"
-    board[coordinates.x + (coordinates.y)] = "x"
+    board[[coordinates.x, coordinates.y].join("")] == :ship ? "hit" : "miss"
   end
 
   private
 
   def create_fleet
-    place_ship(aircraft_carrier).inject({}) do |hsh, e|
-      hsh[e.join("")] = :ship
+    Fleet.new.position_fleet.inject({}) do |hsh, ships|
+      ships.each do |ship|
+        hsh[ship.join("")] = :ship
+      end
       hsh
     end
-  end
-
-  def aircraft_carrier
-    [0, 0, 5, direction]
-  end
-
-  def battleship
-    [0, 0, 5, direction]
-  end
-
-  def direction
-    :down
-  end
-
-  def place_ship(ship)
-    x, y, length, direction = ship
-    dx, dy = direction == :across ? [1, 0] : [0, 1]
-    (0 ... length).map{ |i| [x + i * dx, y + i * dy] }
   end
 end
 

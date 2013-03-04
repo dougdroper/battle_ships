@@ -22,13 +22,13 @@ class Game
     current_board = storage.get(options["id"])
     return [500, {:error => "no game in progress"}] unless current_board
     begin
-      game = Board.new(current_board)
-      game.fire(Coordinates.new(options))
+      board = Board.new(current_board)
+      status = board.fire(Coordinates.new(options))
     rescue => e
       puts e.backtrace
       return [500, {:error => e.message}]
     end
-    [200, {:id=>"users:doug:1", :x=>1, :y=>1, :status=>game.status}]
+    [200, {:id=>"users:doug:1", :x=>1, :y=>1, :status=>status}]
   end
 
   def next_move

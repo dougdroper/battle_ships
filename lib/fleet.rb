@@ -1,48 +1,52 @@
 class Fleet
   attr_reader :fleet
-  def initialize
-    @fleet = [Ship.new(5), Ship.new(4), Ship.new(3), Ship.new(3), Ship.new(2)]
-    @available_positions = [(0...10), (0...10)]
+  def initialize(fleet = [Ship.new(5), Ship.new(4), Ship.new(3), Ship.new(3), Ship.new(2)])
+    @fleet = fleet
+    @pos = []
   end
 
-  def position
-    @fleet.map {|s| s.position(@available_positions) }
+  def position_fleet
+    @fleet.inject([]) do |pos,ship|
+      position(ship, pos)
+    end
+  end
+
+  def position(ship, pos)
+    pos << place_ship(ship)
+    check_valid(ship, pos)
+  end
+
+  def check_valid(ship, pos)
+    if pos.flatten(1).uniq.length == pos.flatten(1).length
+      pos
+    else
+      pos.pop
+      position(ship,pos)
+    end
   end
 
   def place_ship(ship)
-    x, y, length, direction = ship
+    x, y, length, direction = ship.x, ship.y, ship.length, ship.direction
     dx, dy = direction == :across ? [1, 0] : [0, 1]
     (0 ... length).map{ |i| [x + i * dx, y + i * dy] }
   end
 end
 
 class Ship
-  attr_reader :length
-  attr_accessor :x, :y, :direction
+  attr_reader :length, :x, :y, :direction
   def initialize(length)
     @length = length
   end
 
   def direction
-    :across
+    rand(2) == 1 ? :across : :down
   end
 
-  def position(available_positions)
-    x,y = random_position(available_positions)
+  def x
+    rand(10 - length)
   end
 
-  private
-
-  def random_position(available_positions)
-    if direction == :across
-      x_pos = available_positions.first.to_a
-      range = x_pos.slice(start(x_pos), length)
-      available_positions = available_positions - range
-      [range.first, 0]
-    end
-  end
-
-  def start(available_positions)
-    (available_positions.length - length)
+  def y
+    rand(10 - length)
   end
 end
