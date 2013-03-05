@@ -1,5 +1,3 @@
-require 'redis_storage'
-
 class GameService
   attr_reader :game, :storage
 
@@ -15,6 +13,6 @@ class GameService
 
   def fire
     status = Board.new(game.board).fire(game.coordiantes)
-    [200, {:id=>"users:doug:1", :x=>1, :y=>1, :status=>status}]
+    [200, {:id=>game.id, :x=>1, :y=>1, :status=>status}]
   end
 end

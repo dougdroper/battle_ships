@@ -1,5 +1,3 @@
-require 'coordinates'
-
 class Board
   attr_reader :board
   def initialize(board=nil)

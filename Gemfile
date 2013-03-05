@@ -3,6 +3,7 @@ source "http://rubygems.org"
 gem 'sinatra'
 gem 'redis'
 gem 'yajl-ruby', :require => "yajl"
+gem 'json'
 gem 'faraday'
 
 group :development do

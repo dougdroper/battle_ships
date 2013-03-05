@@ -11,6 +11,14 @@ class RedisStorage
     @uri ||= URI.parse(ENV["REDISTOGO_URL"])
   end
 
+  def get(id)
+    redis.get(id)
+  end
+
+  def set(id, data, other)
+    redis.set(id, data)
+  end
+
   def incr(name)
     redis.incr name
   end

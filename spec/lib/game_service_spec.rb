@@ -6,7 +6,8 @@ describe GameService do
     GameService.new(stub(:storage => stub(:set => true),
       :game_name => "users:doug:1",
       :board => stub,
-      :coordiantes => stub
+      :coordiantes => stub,
+      :id => "users:doug:1"
     ))
   end
 
