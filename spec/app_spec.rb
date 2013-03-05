@@ -5,7 +5,6 @@ describe "Sinatra App" do
     RedisStorage.any_instance.stub(:incr => 1, :set => stub)
     data = Yajl::Encoder.encode({:name => "doug", :email => "dougdroper"})
     post '/new', :data => data
-    last_response.should be_ok
     Yajl::Parser.parse(last_response.body).should == {"id" => "users:doug:1", "x"=>1, "y"=>1}
   end
 
@@ -21,6 +20,6 @@ describe "Sinatra App" do
     RedisStorage.any_instance.stub(:incr => 1, :get => nil, :set => stub)
     data = Yajl::Encoder.encode({:id => 'users:doug:1', :x => 1, :y => 1})
     post '/fire', :data => data
-    Yajl::Parser.parse(last_response.body).should == {"error"=>"no game in progress"}
+    Yajl::Parser.parse(last_response.body).should == {"error"=>"No Game Found"}
   end
 end
