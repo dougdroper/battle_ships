@@ -16,7 +16,7 @@ class RedisStorage
   end
 
   def set(id, data, other)
-    redis.set(id, data)
+    redis.mset(id, data, id, other)
   end
 
   def incr(name)

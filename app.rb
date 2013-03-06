@@ -9,6 +9,7 @@ require_relative 'lib/fleet'
 require_relative 'lib/new_game'
 require_relative 'lib/current_game'
 require_relative 'lib/coordinates'
+require_relative 'lib/game_logic'
 
 configure do
   mime_type :json, "application/json"
