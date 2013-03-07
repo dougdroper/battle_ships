@@ -12,11 +12,11 @@ describe GameService do
   end
 
   it "new game" do
-    subject.new_game.should == [200, {:id => "users:doug:1", :x => 1, :y => 1}]
+    subject.new_game(stub(:xy => [1,1], :places_visited => [])).should == [200, {:id => "users:doug:1", :x => 1, :y => 1}]
   end
 
   it "fire" do
     Board.any_instance.stub(:fire => "miss")
-    subject.fire.should == [200, {:id=>"users:doug:1", :x=>1, :y=>1, :status=>"miss"}]
+    subject.fire(stub(:xy => [1,1], :places_visited => [])).should == [200, {:id=>"users:doug:1", :x=>1, :y=>1, :status=>"miss"}]
   end
 end

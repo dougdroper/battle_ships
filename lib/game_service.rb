@@ -6,13 +6,16 @@ class GameService
     @storage = game.storage
   end
 
-  def new_game
-    storage.set(game.game_name, Board.new.board, [])
-    [200, {:id => game.game_name, :x => 1, :y => 1}]
+  def new_game(logic=GameLogic.new([]))
+    x,y = logic.xy
+    storage.set(game.game_name, Board.new.board, logic.places_visited)
+    [200, {:id => game.game_name, :x => x, :y => y}]
   end
 
-  def fire
+  def fire(logic=GameLogic.new(game.board[:visited]))
+    x,y = logic.xy
     status = Board.new(game.board).fire(game.coordiantes)
+    storage.set(game.id, game.board, logic.places_visited)
     [200, {:id=>game.id, :x=>1, :y=>1, :status=>status}]
   end
 end

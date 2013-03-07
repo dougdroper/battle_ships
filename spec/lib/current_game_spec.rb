@@ -7,7 +7,7 @@ describe CurrentGame do
     @params = {"id" => "", "x" => 1, "y" => 1}
   end
 
-  it "retrieves the current board" do
+  it "retrieves the current ships" do
     storage = stub(:get => {})
     subject.new(storage, @params).board.should == {}
   end

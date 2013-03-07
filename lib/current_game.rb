@@ -1,5 +1,5 @@
 class CurrentGame
-  attr_reader :id, :storage, :coordiantes
+  attr_reader :id, :storage, :coordiantes, :board
   def initialize(storage=RedisStorage.new, options={})
     @storage = storage
     @id = options["id"]

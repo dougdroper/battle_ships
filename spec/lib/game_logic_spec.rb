@@ -1,15 +1,15 @@
 require 'spec_helper'
 
 describe GameLogic do
-  it "has xy that is not in the board" do
+  it "has x and y that has not been visited before" do
     GameLogic.any_instance.stub(:random_number).and_return(0,0,1,1)
-    GameLogic.new(["00"]).xy.should == "11"
+    GameLogic.new(["00"]).xy.should == ["1","1"]
   end
 
-  it "keeps going until the board is full" do
+  it "keeps going until the places_visited is full" do
     game = GameLogic.new
     101.times { game.xy }
-    game.board.map {|e| e.split("")}.flatten.select {|e| e.to_i == 0}.length.should == 20
-    game.board.length.should == 100
+    game.places_visited.map {|e| e.split("")}.flatten.select {|e| e.to_i == 0}.length.should == 20
+    game.places_visited.length.should == 100
   end
 end

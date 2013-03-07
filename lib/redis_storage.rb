@@ -16,7 +16,7 @@ class RedisStorage
   end
 
   def set(id, data, other)
-    redis.mset(id, data, id, other)
+    redis.set(id, data.merge(:visted => other))
   end
 
   def incr(name)
