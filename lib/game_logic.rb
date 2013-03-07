@@ -2,8 +2,10 @@ class GameLogic
   attr_reader :places_visited
   BOARD_LENGTH = 10
   MAX_BOARD_LENGTH = 100
-  def initialize(places_visited=[])
+  def initialize(opponent_coordiantes, places_visited={})
+    @opponent_coordiantes = opponent_coordiantes.join("")
     @places_visited = places_visited
+    status_of_opponent
   end
 
   def xy
@@ -14,8 +16,12 @@ class GameLogic
 
   private
 
+  def status_of_opponent
+
+  end
+
   def add_to_places_visited(try)
-    places_visited << try
+    places_visited[try] = ""
     try.split('')
   end
 
