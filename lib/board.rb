@@ -6,7 +6,7 @@ class Board
 
   def fire(coordinates)
     raise AlreadyTaken if board[coordinates.x + (coordinates.y)] == "x"
-    board[[coordinates.x, coordinates.y].join("")] == :ship ? "hit" : "miss"
+    board[[coordinates.x, coordinates.y].join("")] == "s" ? "hit" : "miss"
   end
 
   private
@@ -14,7 +14,7 @@ class Board
   def create_fleet
     Fleet.new.position_fleet.inject({}) do |hsh, ships|
       ships.each do |ship|
-        hsh[ship.join("")] = :ship
+        hsh[ship.join("")] = "s"
       end
       hsh
     end

@@ -10,7 +10,8 @@ describe "Sinatra App" do
   end
 
   it "receives a fire request" do
-    RedisStorage.any_instance.stub(:incr => 1, :get => ({:visited => ["11"]}), :set => Board.new)
+    GameLogic.any_instance.stub(:xy => [1,1])
+    RedisStorage.any_instance.stub(:incr => 1, :get => ({"visited" => ["11"]}), :set => Board.new)
     data = Yajl::Encoder.encode({:id => 'users:doug:1', :x => 1, :y => 1})
     post '/fire', data
     Yajl::Parser.parse(last_response.body).should ==  {"id"=>"users:doug:1", "x"=>1, "y"=>1, "status"=>"miss"}
@@ -25,7 +26,8 @@ describe "Sinatra App" do
   end
 
   it "receives a fire request with a status" do
-    RedisStorage.any_instance.stub(:incr => 1, :get => ({:visited => ["11"]}), :set => Board.new)
+    GameLogic.any_instance.stub(:xy => [1,1])
+    RedisStorage.any_instance.stub(:incr => 1, :get => ({"visited" => ["11"]}), :set => Board.new)
     data = Yajl::Encoder.encode({:id => 'users:doug:1', :x => 1, :y => 1, :status => "miss"})
     post '/fire', data
     Yajl::Parser.parse(last_response.body).should ==  {"id"=>"users:doug:1", "x"=>1, "y"=>1, "status"=>"miss"}

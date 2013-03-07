@@ -12,11 +12,11 @@ class RedisStorage
   end
 
   def get(id)
-    redis.get(id)
+    JSON.parse(redis.get(id))
   end
 
   def set(id, data, other)
-    redis.set(id, data.merge(:visted => other))
+    redis.set(id, (data.merge("visited" => other)).to_json)
   end
 
   def incr(name)

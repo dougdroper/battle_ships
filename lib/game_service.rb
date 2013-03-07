@@ -12,10 +12,10 @@ class GameService
     [200, {:id => game.game_name, :x => x, :y => y}]
   end
 
-  def fire(logic=GameLogic.new(game.board[:visited]))
+  def fire(logic=GameLogic.new(game.board["visited"]))
     x,y = logic.xy
     status = Board.new(game.board).fire(game.coordiantes)
     storage.set(game.id, game.board, logic.places_visited)
-    [200, {:id=>game.id, :x=>1, :y=>1, :status=>status}]
+    [200, {:id=>game.id, :x=>x, :y=>y, :status=>status}]
   end
 end

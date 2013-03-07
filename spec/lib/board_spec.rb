@@ -24,6 +24,6 @@ describe Board do
   it "places a ship down" do
     Fleet.any_instance.stub(:position_fleet).and_return([[[0,0], [0,1], [0,2]]])
     board = Board.new
-    board.board.should == {"00" => :ship, "01" => :ship, "02" => :ship}
+    board.board.should == {"00" => "s", "01" => "s", "02" => "s"}
   end
 end

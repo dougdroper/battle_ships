@@ -40,6 +40,7 @@ def wrapper
   begin
     yield
   rescue Exception => e
+    # puts e.backtrace
     [500, [encode({:error => "#{e.message}"})]]
   end
 end
