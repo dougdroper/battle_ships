@@ -1,15 +1,12 @@
 class CurrentGame
-  attr_reader :id, :storage, :coordiantes, :fleet, :status
-  def initialize(storage=RedisStorage.new, options={})
-    @storage = storage
+  attr_reader :game
+  def initialize(options={})
     @id = options["id"]
     @status = options["status"]
-    @coordiantes = Coordinates.new(options)
-  end
-
-  def fleet
-    storage.get(id).tap do |game|
-      raise NoGameException unless game
+    begin
+      @game = Marshal.load(RedisStorage.new.get(options["id"]))
+    rescue
+      raise NoGameException.new
     end
   end
 end

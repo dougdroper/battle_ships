@@ -6,7 +6,7 @@ require_relative 'lib/redis_storage'
 require_relative 'lib/game_service'
 require_relative 'lib/board'
 require_relative 'lib/fleet'
-require_relative 'lib/new_game'
+require_relative 'lib/game'
 require_relative 'lib/current_game'
 require_relative 'lib/coordinates'
 require_relative 'lib/game_logic'
@@ -22,16 +22,18 @@ end
 
 post "/new" do
   wrapper do
-    new_game = NewGame.new(RedisStorage.new, @params)
-    status, data = GameService.new(new_game).new_game
+    game = Game.new
+    game.new_game(@params)
+    status, data = GameService.new(game).new_game
     [status, [encode(data)]]
   end
 end
 
 post "/fire" do
   wrapper do
-    current_game = CurrentGame.new(RedisStorage.new, @params)
-    status, data = GameService.new(current_game).fire
+    game = CurrentGame.new(@params).game
+    game.fire(@params)
+    status, data = GameService.new(game).fire
     [status, [encode(data)]]
   end
 end

@@ -7,18 +7,17 @@ describe CurrentGame do
     @params = {"id" => "", "x" => 1, "y" => 1}
   end
 
-  it "retrieves the current ships" do
-    storage = stub(:get => {})
-    subject.new(storage, @params).board.should == {}
+  it "raises when no game is found" do
+    expect { subject.new(@params) }.to raise_exception
   end
 
   it "raises an error when no game is found" do
     storage = stub(:get => nil)
-    expect { subject.new(storage, @params).board }.to raise_exception(NoGameException)
+    expect { subject.new(@params).board }.to raise_exception(NoGameException)
   end
 
   it "raises an error when no id is provided" do
     storage = stub(:get => nil)
-    expect { subject.new(storage, @params).board }.to raise_exception(NoGameException)
+    expect { subject.new(@params).board }.to raise_exception(NoGameException)
   end
 end

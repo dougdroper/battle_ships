@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe GameLogic do
   before do
-    @game = stub(:coordiantes => [0,0], :status => "hit", :board => {"visited" => {"00" => ''}})
+    @game = stub(:opponent_coordiantes => [0,0], :status => "hit", :fleet => {"00" => ''})
   end
 
   it "has x and y that has not been visited before" do
@@ -11,7 +11,9 @@ describe GameLogic do
   end
 
   it "marks the opponents coordinates as hit" do
-    GameLogic.new(@game).places_visited.should == {"00" => "hit"}
+    g = GameLogic.new(@game)
+    g.update_status_of_opponent("hit")
+    g.places_visited.should == {"00" => "hit"}
   end
 
   it "keeps going until the places_visited is full" do

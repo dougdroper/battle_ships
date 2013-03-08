@@ -3,8 +3,8 @@ class GameLogic
   BOARD_LENGTH = 10
   MAX_BOARD_LENGTH = 100
   def initialize(game)
-    @opponent_coordiantes = game.coordiantes.join("")
-    @places_visited = game.fleet["visited"]
+    @opponent_coordiantes = game.opponent_coordiantes.join("")
+    @places_visited = game.fleet
   end
 
   def xy
