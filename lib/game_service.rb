@@ -6,16 +6,18 @@ class GameService
     @storage = game.storage
   end
 
-  def new_game(logic=GameLogic.new([]))
+  def new_game(logic=GameLogic.new(game))
     x,y = logic.xy
-    storage.set(game.game_name, Board.new.board, logic.places_visited)
+    storage.set(game.game_name, Board.new.fleet.merge("visited" => logic.places_visited))
     [200, {:id => game.game_name, :x => x, :y => y}]
   end
 
-  def fire(logic=GameLogic.new(game.coordiantes, game.board["visited"]))
+  def fire(logic=GameLogic.new(game))
+    debugger
+    logic.update_status_of_opponent(game.status)
     x,y = logic.xy
-    status = Board.new(game.board).fire(game.coordiantes)
-    storage.set(game.id, game.board, logic.places_visited)
+    status = Board.new(game.fleet).fire(game.coordiantes)
+    storage.set(game.id, game.fleet.merge("visited" => logic.places_visited))
     [200, {:id=>game.id, :x=>x, :y=>y, :status=>status}]
   end
 end

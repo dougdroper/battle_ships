@@ -1,12 +1,12 @@
 class Board
-  attr_reader :board
-  def initialize(board=nil)
-    @board = board || create_fleet
+  attr_reader :fleet
+  def initialize(fleet=nil)
+    @fleet = fleet || create_fleet
   end
 
   def fire(coordinates)
-    raise AlreadyTaken if board[coordinates.x + (coordinates.y)] == "x"
-    board[[coordinates.x, coordinates.y].join("")] == "s" ? "hit" : "miss"
+    raise AlreadyTaken if fleet[coordinates.x + (coordinates.y)] == "x"
+    fleet[[coordinates.x, coordinates.y].join("")] == "s" ? "hit" : "miss"
   end
 
   private

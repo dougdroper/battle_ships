@@ -11,6 +11,18 @@ class NewGame
     @game_name ||= "users:#{name.downcase}:#{id}"
   end
 
+  def coordiantes
+    []
+  end
+
+  def fleet
+    {"visited" => {}}
+  end
+
+  def status
+    ""
+  end
+
   private
 
   def id

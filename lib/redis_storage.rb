@@ -15,8 +15,8 @@ class RedisStorage
     JSON.parse(redis.get(id))
   end
 
-  def set(id, data, other)
-    redis.set(id, (data.merge("visited" => other)).to_json)
+  def set(id, data)
+    redis.set(id, data.to_json)
   end
 
   def incr(name)

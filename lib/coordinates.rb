@@ -5,6 +5,10 @@ class Coordinates
     validate
   end
 
+  def join(s="")
+    [@x, @y].join(s)
+  end
+
   private
 
   def validate
