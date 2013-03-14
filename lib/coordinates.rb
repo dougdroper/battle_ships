@@ -21,7 +21,7 @@ class Coordinates
   end
 
   def out_of_bounds?
-    x < 0 || y > 100
+    x.to_i < 0 || y.to_i > 100
   end
 end
 
